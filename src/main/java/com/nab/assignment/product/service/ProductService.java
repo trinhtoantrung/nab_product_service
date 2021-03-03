@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 public interface ProductService {
     List<BrandDTO> getBrandList();
@@ -23,4 +24,6 @@ public interface ProductService {
                             Set<String> colors,
                             Set<String> tags,
                             Pageable pageable);
+
+    void updatePrice(UUID id, Long price);
 }

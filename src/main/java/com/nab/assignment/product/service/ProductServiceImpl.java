@@ -7,14 +7,8 @@ import com.nab.assignment.product.dto.TagDTO;
 import com.nab.assignment.product.jpa.specification.product.ProductSpecification;
 import com.nab.assignment.product.jpa.specification.product.ProductSpecificationsBuilder;
 import com.nab.assignment.product.jpa.specification.product.SearchCriteria;
-import com.nab.assignment.product.model.Brand;
-import com.nab.assignment.product.model.Color;
-import com.nab.assignment.product.model.Product;
-import com.nab.assignment.product.model.Tag;
-import com.nab.assignment.product.repository.BrandRepository;
-import com.nab.assignment.product.repository.ColorRepository;
-import com.nab.assignment.product.repository.ProductRepository;
-import com.nab.assignment.product.repository.TagRepository;
+import com.nab.assignment.product.model.*;
+import com.nab.assignment.product.repository.*;
 import com.nab.assignment.product.util.ProductUtil;
 import com.nab.assignment.product.util.VNCharacterUtils;
 import org.apache.commons.collections4.CollectionUtils;
@@ -23,9 +17,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,12 +31,14 @@ public class ProductServiceImpl implements ProductService {
     private final ColorRepository colorRepository;
     private final TagRepository tagRepository;
     private final ProductRepository productRepository;
+    private final ProductPriceTraceLogRepository productPriceTraceLogRepository;
 
-    public ProductServiceImpl(BrandRepository brandRepository, ColorRepository colorRepository, TagRepository tagRepository, ProductRepository productRepository) {
+    public ProductServiceImpl(BrandRepository brandRepository, ColorRepository colorRepository, TagRepository tagRepository, ProductRepository productRepository, ProductPriceTraceLogRepository productPriceTraceLogRepository) {
         this.brandRepository = brandRepository;
         this.colorRepository = colorRepository;
         this.tagRepository = tagRepository;
         this.productRepository = productRepository;
+        this.productPriceTraceLogRepository = productPriceTraceLogRepository;
     }
 
     @Override
@@ -133,5 +131,13 @@ public class ProductServiceImpl implements ProductService {
         Page<Product> productPage = productRepository.findAll(searchSpecification, pageable);
 
         return productPage.map(product -> ProductUtil.convertToDTO(product));
+    }
+
+    @Override
+    @Transactional
+    public void updatePrice(UUID id, Long price) {
+        productRepository.updatePrice(id, price);
+        ProductPriceTraceLog traceLog = new ProductPriceTraceLog(id, price);
+        productPriceTraceLogRepository.save(traceLog);
     }
 }

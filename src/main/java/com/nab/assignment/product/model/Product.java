@@ -85,11 +85,4 @@ public class Product extends AbstractAuditingEntity {
         this.searchString = StringUtils.lowerCase(VNCharacterUtils.removeAccent(searchString));
         log.debug("Product onPrePersist - update searchString: {}", this.searchString);
     }
-
-//    @PreUpdate
-//    public void onPreUpdate() {
-//        String searchString = name + " " + sku + " " + model;
-//        this.searchString = StringUtils.lowerCase(VNCharacterUtils.removeAccent(searchString));
-//        log.debug("Product onPreUpdate - update searchString: {}", this.searchString);
-//    }
 }

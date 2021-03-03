@@ -4,17 +4,17 @@ import com.nab.assignment.product.dto.BrandDTO;
 import com.nab.assignment.product.dto.ColorDTO;
 import com.nab.assignment.product.dto.ProductDTO;
 import com.nab.assignment.product.dto.TagDTO;
+import com.nab.assignment.product.dto.request.UpdateProductPriceDTO;
 import com.nab.assignment.product.service.ProductService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.lang.Nullable;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(path = "/product")
@@ -55,5 +55,10 @@ public class ProductController {
                                    @Nullable @RequestParam("tags") Set<String> tags,
                                    Pageable pageable) {
         return productService.search(text, minPrice, maxPrice, brands, colors, tags, pageable);
+    }
+
+    @PostMapping(path = "/update-price")
+    public void updatePrice(@Valid @RequestBody UpdateProductPriceDTO dto) {
+        productService.updatePrice(UUID.fromString(dto.getId()), dto.getPrice());
     }
 }
