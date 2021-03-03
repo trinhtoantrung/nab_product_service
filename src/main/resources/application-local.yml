@@ -17,3 +17,4 @@ spring:
 logging:
   level:
     com.nab.assignment.product: debug
+    org.springframework.web.filter.CommonsRequestLoggingFilter: debug

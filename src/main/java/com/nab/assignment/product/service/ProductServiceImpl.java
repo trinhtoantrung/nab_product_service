@@ -9,7 +9,7 @@ import com.nab.assignment.product.jpa.specification.product.ProductSpecification
 import com.nab.assignment.product.jpa.specification.product.SearchCriteria;
 import com.nab.assignment.product.model.*;
 import com.nab.assignment.product.repository.*;
-import com.nab.assignment.product.util.ProductUtil;
+import com.nab.assignment.product.util.ProductUtils;
 import com.nab.assignment.product.util.VNCharacterUtils;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -49,7 +49,7 @@ public class ProductServiceImpl implements ProductService {
             return null;
         }
 
-        return brandList.stream().map(o -> ProductUtil.convertToDTO(o)).collect(Collectors.toList());
+        return brandList.stream().map(o -> ProductUtils.convertToDTO(o)).collect(Collectors.toList());
     }
 
     @Override
@@ -60,7 +60,7 @@ public class ProductServiceImpl implements ProductService {
             return null;
         }
 
-        return colorList.stream().map(o -> ProductUtil.convertToDTO(o)).collect(Collectors.toList());
+        return colorList.stream().map(o -> ProductUtils.convertToDTO(o)).collect(Collectors.toList());
     }
 
     @Override
@@ -71,13 +71,13 @@ public class ProductServiceImpl implements ProductService {
             return null;
         }
 
-        return tagList.stream().map(o -> ProductUtil.convertToDTO(o)).collect(Collectors.toList());
+        return tagList.stream().map(o -> ProductUtils.convertToDTO(o)).collect(Collectors.toList());
     }
 
     @Override
     public Page<ProductDTO> getProductPage(Pageable pageable) {
         Page<Product> productPage = productRepository.findAll(pageable);
-        return productPage.map(product -> ProductUtil.convertToDTO(product));
+        return productPage.map(product -> ProductUtils.convertToDTO(product));
     }
 
     @Override
@@ -130,7 +130,7 @@ public class ProductServiceImpl implements ProductService {
 
         Page<Product> productPage = productRepository.findAll(searchSpecification, pageable);
 
-        return productPage.map(product -> ProductUtil.convertToDTO(product));
+        return productPage.map(product -> ProductUtils.convertToDTO(product));
     }
 
     @Override

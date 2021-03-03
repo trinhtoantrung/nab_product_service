@@ -12,7 +12,7 @@ import org.apache.commons.collections4.CollectionUtils;
 
 import java.util.stream.Collectors;
 
-public class ProductUtil {
+public class ProductUtils {
     public static BrandDTO convertToDTO(Brand brand) {
         if (brand == null) {
             return null;

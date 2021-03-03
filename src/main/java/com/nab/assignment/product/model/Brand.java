@@ -1,6 +1,6 @@
 package com.nab.assignment.product.model;
 
-import com.nab.assignment.product.util.GsonUtil;
+import com.nab.assignment.product.util.GsonUtils;
 import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,6 +32,6 @@ public class Brand extends AbstractAuditingEntity {
 
     @PrePersist
     public void onPrePersist() {
-        log.debug("onPrePersist: {}", GsonUtil.toJsonPretty(this));
+        log.debug("onPrePersist: {}", GsonUtils.toJsonPretty(this));
     }
 }
