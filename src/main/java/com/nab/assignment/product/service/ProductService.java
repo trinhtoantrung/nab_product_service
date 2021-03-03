@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Set;
 
 public interface ProductService {
     List<BrandDTO> getBrandList();
@@ -15,4 +16,11 @@ public interface ProductService {
     List<TagDTO> getTagList();
 
     Page<ProductDTO> getProductPage(Pageable pageable);
+    Page<ProductDTO> search(String text,
+                            Long minPrice,
+                            Long maxPrice,
+                            Set<String> brands,
+                            Set<String> colors,
+                            Set<String> tags,
+                            Pageable pageable);
 }
