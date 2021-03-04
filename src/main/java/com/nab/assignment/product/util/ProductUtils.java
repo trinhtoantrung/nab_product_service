@@ -59,6 +59,7 @@ public class ProductUtils {
         dto.setModel(product.getModel());
         dto.setName(product.getName());
         dto.setPrice(product.getPrice());
+        dto.setQuantity(product.getQuantity());
 
         if (CollectionUtils.isNotEmpty(product.getBrands())) {
             dto.setBrandDTOSet(

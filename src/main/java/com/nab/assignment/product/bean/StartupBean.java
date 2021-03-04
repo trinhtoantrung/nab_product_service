@@ -90,6 +90,8 @@ public class StartupBean {
         // products => models 123-23-1, 392-43-2, 383-25-5
         if (!productRepository.existsByModel("123-23-1")) {
             Product newProduct = new Product("123-23-1", "Ross Armless Chair - Melinda Nubia Fabric");
+            newProduct.setPrice(1000000L);
+            newProduct.setQuantity(1L);
 
             Brand brand = brandRepository.findById("sonder-living").get();
             newProduct.getBrands().add(brand);
@@ -105,6 +107,8 @@ public class StartupBean {
 
         if (!productRepository.existsByModel("392-43-2")) {
             Product newProduct = new Product("392-43-2", "Avalon Sofa - 3-Seat");
+            newProduct.setPrice(2000000L);
+            newProduct.setQuantity(2L);
 
             Brand brand = brandRepository.findById("azhome-living").get();
             newProduct.getBrands().add(brand);
@@ -120,6 +124,8 @@ public class StartupBean {
 
         if (!productRepository.existsByModel("383-25-5")) {
             Product newProduct = new Product("383-25-5", "Dawson Armless Chair - Melinda Nubia");
+            newProduct.setPrice(3000000L);
+            newProduct.setQuantity(3L);
 
             Brand brand = brandRepository.findById("osho-living").get();
             newProduct.getBrands().add(brand);

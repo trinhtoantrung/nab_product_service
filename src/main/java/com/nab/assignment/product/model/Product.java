@@ -47,6 +47,8 @@ public class Product extends AbstractAuditingEntity {
 
     private Long price = 0L;
 
+    private Long quantity = 0L;
+
     @Column(name = "search_string")
     @JsonProperty("search_string")
     private String searchString = "";

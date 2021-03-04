@@ -13,19 +13,25 @@ import com.nab.assignment.product.util.ProductUtils;
 import com.nab.assignment.product.util.VNCharacterUtils;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
 public class ProductServiceImpl implements ProductService {
+    private static final Logger log = LoggerFactory.getLogger(ProductServiceImpl.class);
 
     private final BrandRepository brandRepository;
     private final ColorRepository colorRepository;
@@ -139,5 +145,37 @@ public class ProductServiceImpl implements ProductService {
         productRepository.updatePrice(id, price);
         ProductPriceTraceLog traceLog = new ProductPriceTraceLog(id, price);
         productPriceTraceLogRepository.save(traceLog);
+    }
+
+    @Override
+    public ProductDTO getProductDetails(UUID id) {
+        Optional<Product> optionalProduct = productRepository.findById(id);
+        return optionalProduct.isPresent() ? ProductUtils.convertToDTO(optionalProduct.get()) : null;
+    }
+
+    @Override
+    public Boolean validateProductQuantity(UUID id, Long quantity) {
+        Optional<Product> optionalProduct = productRepository.findById(id);
+        if (!optionalProduct.isPresent()) {
+            log.error("Not found product id: " + id.toString());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Not found product id: " + id.toString());
+        }
+
+        if (quantity > 0 && quantity <= optionalProduct.get().getQuantity()) {
+            return true;
+        }
+
+        return false;
+    }
+
+    @Override
+    public Long getPrice(UUID id) {
+        Optional<Product> optionalProduct = productRepository.findById(id);
+        if (!optionalProduct.isPresent()) {
+            log.error("Not found product id: " + id.toString());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Not found product id: " + id.toString());
+        }
+
+        return optionalProduct.get().getPrice();
     }
 }

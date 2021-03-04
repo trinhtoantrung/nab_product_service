@@ -15,6 +15,7 @@ public class ProductDTO implements Serializable {
     private String model;
     private String name;
     private Long price;
+    private Long quantity;
 
     @JsonProperty("brands")
     private Set<BrandDTO> brandDTOSet;

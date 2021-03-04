@@ -61,4 +61,19 @@ public class ProductController {
     public void updatePrice(@Valid @RequestBody UpdateProductPriceDTO dto) {
         productService.updatePrice(UUID.fromString(dto.getId()), dto.getPrice());
     }
+
+    @GetMapping(path = "/id/{id}")
+    public ProductDTO getProductDetails(@PathVariable("id") String id) {
+        return productService.getProductDetails(UUID.fromString(id));
+    }
+
+    @GetMapping(path = "/validate-quantity")
+    public Boolean validateQuantity(@RequestParam("id") String id, @RequestParam("quantity") Long quantity) {
+        return productService.validateProductQuantity(UUID.fromString(id), quantity);
+    }
+
+    @GetMapping(path = "/price")
+    public Long getPrice(@RequestParam("id") String id) {
+        return productService.getPrice(UUID.fromString(id));
+    }
 }

@@ -26,4 +26,10 @@ public interface ProductService {
                             Pageable pageable);
 
     void updatePrice(UUID id, Long price);
+
+    ProductDTO getProductDetails(UUID id);
+
+    Boolean validateProductQuantity(UUID id, Long quantity);
+
+    Long getPrice(UUID id);
 }
