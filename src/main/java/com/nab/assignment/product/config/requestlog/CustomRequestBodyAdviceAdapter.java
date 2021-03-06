@@ -37,9 +37,11 @@ public class CustomRequestBodyAdviceAdapter extends RequestBodyAdviceAdapter {
 
     @Override
     public Object afterBodyRead(Object body, HttpInputMessage inputMessage, MethodParameter parameter, Type targetType, Class<? extends HttpMessageConverter<?>> converterType) {
-        // async write request body
-        log.trace("Async write request body: {}", httpServletRequest.getAttribute(ApplicationConstants.REQUEST_ID));
-        requestLogService.logRequestBody(UUID.fromString(httpServletRequest.getAttribute(ApplicationConstants.REQUEST_ID).toString()), body);
+        if (httpServletRequest.getAttribute(ApplicationConstants.REQUEST_ID) != null) {
+            // async write request body
+            log.trace("Async write request body: {}", httpServletRequest.getAttribute(ApplicationConstants.REQUEST_ID));
+            requestLogService.logRequestBody(UUID.fromString(httpServletRequest.getAttribute(ApplicationConstants.REQUEST_ID).toString()), body);
+        }
 
         return super.afterBodyRead(body, inputMessage, parameter, targetType, converterType);
     }
