@@ -15,6 +15,11 @@ spring:
     url: jdbc:postgresql://localhost:5432/nab_product
     username: postgres
     password: 2020
+    hikari:
+      connection-timeout: 10000
+      maximum-pool-size: 10
+      auto-commit: false
+      pool-name: Hikari
 
 logging:
   level:

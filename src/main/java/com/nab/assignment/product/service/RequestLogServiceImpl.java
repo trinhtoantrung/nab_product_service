@@ -69,4 +69,15 @@ public class RequestLogServiceImpl implements RequestLogService {
             requestLogRepository.save(requestLog);
         }
     }
+
+    @Async
+    @Override
+    public void logRequestBody(UUID id, Object body) {
+        if (body != null) {
+            log.info("[BODY REQUEST]: \n {}", GsonUtils.toJsonPretty(body));
+            RequestLog requestLog = requestLogRepository.findById(id).get();
+            requestLog.setRequestBody(GsonUtils.toJson(body));
+            requestLogRepository.save(requestLog);
+        }
+    }
 }

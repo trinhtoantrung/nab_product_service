@@ -3,6 +3,7 @@ package com.nab.assignment.product.model;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,6 +14,7 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @Entity(name = "request_log")
+@DynamicUpdate
 public class RequestLog extends AbstractAuditingEntity {
     @Id
     private UUID id;
