@@ -10,14 +10,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "/about-us")
 public class AboutController {
     @Value("${application.name}")
-    String name;
+    private String name;
 
     @Value("${application.version}")
-    String version;
+    private String version;
 
     @Value("${application.description}")
-    String description;
-
+    private String description;
 
     @GetMapping("/info")
     public AppInfoDTO getInfo() {
