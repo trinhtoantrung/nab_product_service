@@ -33,11 +33,13 @@ public class ProductSpecification implements Specification<Product> {
                 return null;
             }
 
-            if (root.get(criteria.getKey()).getJavaType() == String.class) {
-                return criteriaBuilder.like(root.get(criteria.getKey()), "%" + criteria.getValue() + "%");
-            } else {
-                return criteriaBuilder.equal(root.get(criteria.getKey()), criteria.getValue());
-            }
+            return criteriaBuilder.like(root.get(criteria.getKey()), "%" + criteria.getValue() + "%");
+
+//            if (root.get(criteria.getKey()).getJavaType() == String.class) {
+//                return criteriaBuilder.like(root.get(criteria.getKey()), "%" + criteria.getValue() + "%");
+//            } else {
+//                return criteriaBuilder.equal(root.get(criteria.getKey()), criteria.getValue());
+//            }
         } else if (criteria.getOperation().equalsIgnoreCase("IN")) {
             if (Objects.isNull(criteria.getValue())) {
                 return null;
