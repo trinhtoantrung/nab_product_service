@@ -55,7 +55,7 @@ public class ProductServiceImpl implements ProductService {
             return null;
         }
 
-        return brandList.stream().map(o -> ProductUtils.convertToDTO(o)).collect(Collectors.toList());
+        return brandList.stream().map(o -> ProductUtils.convertBrandToDTO(o)).collect(Collectors.toList());
     }
 
     @Override
@@ -66,7 +66,7 @@ public class ProductServiceImpl implements ProductService {
             return null;
         }
 
-        return colorList.stream().map(o -> ProductUtils.convertToDTO(o)).collect(Collectors.toList());
+        return colorList.stream().map(o -> ProductUtils.convertColorToDTO(o)).collect(Collectors.toList());
     }
 
     @Override
@@ -77,13 +77,13 @@ public class ProductServiceImpl implements ProductService {
             return null;
         }
 
-        return tagList.stream().map(o -> ProductUtils.convertToDTO(o)).collect(Collectors.toList());
+        return tagList.stream().map(o -> ProductUtils.convertTagToDTO(o)).collect(Collectors.toList());
     }
 
     @Override
     public Page<ProductDTO> getProductPage(Pageable pageable) {
         Page<Product> productPage = productRepository.findAll(pageable);
-        return productPage.map(product -> ProductUtils.convertToDTO(product));
+        return productPage.map(product -> ProductUtils.convertProductToDTO(product));
     }
 
     @Override
@@ -136,7 +136,7 @@ public class ProductServiceImpl implements ProductService {
 
         Page<Product> productPage = productRepository.findAll(searchSpecification, pageable);
 
-        return productPage.map(product -> ProductUtils.convertToDTO(product));
+        return productPage.map(product -> ProductUtils.convertProductToDTO(product));
     }
 
     @Override
@@ -150,7 +150,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductDTO getProductDetails(UUID id) {
         Optional<Product> optionalProduct = productRepository.findById(id);
-        return optionalProduct.isPresent() ? ProductUtils.convertToDTO(optionalProduct.get()) : null;
+        return optionalProduct.isPresent() ? ProductUtils.convertProductToDTO(optionalProduct.get()) : null;
     }
 
     @Override

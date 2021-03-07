@@ -74,7 +74,7 @@ class ProductServiceImplTest {
         List<Brand> brandList1 = new ArrayList<>();
         Brand brand1 = new Brand("azh", "AZHOME Living");
         brandList1.add(brand1);
-        List<BrandDTO> expectedResult1 = brandList1.stream().map(o -> ProductUtils.convertToDTO(o)).collect(Collectors.toList());
+        List<BrandDTO> expectedResult1 = brandList1.stream().map(o -> ProductUtils.convertBrandToDTO(o)).collect(Collectors.toList());
 
         when(brandRepository.findAll()).thenReturn(brandList1);
         assertEquals(expectedResult1, productService.getBrandList());
@@ -88,7 +88,7 @@ class ProductServiceImplTest {
         List<Color> colorList = new ArrayList<>();
         Color color1 = new Color("red", "Red");
         colorList.add(color1);
-        List<ColorDTO> expectedResult = colorList.stream().map(o -> ProductUtils.convertToDTO(o)).collect(Collectors.toList());
+        List<ColorDTO> expectedResult = colorList.stream().map(o -> ProductUtils.convertColorToDTO(o)).collect(Collectors.toList());
 
         when(colorRepository.findAll()).thenReturn(null);
         assertEquals(null, productService.getColorList());
@@ -102,7 +102,7 @@ class ProductServiceImplTest {
         List<Tag> tagList = new ArrayList<>();
         Tag tag1 = new Tag("new", "NEW");
         tagList.add(tag1);
-        List<TagDTO> expectedResult = tagList.stream().map(o -> ProductUtils.convertToDTO(o)).collect(Collectors.toList());
+        List<TagDTO> expectedResult = tagList.stream().map(o -> ProductUtils.convertTagToDTO(o)).collect(Collectors.toList());
 
         when(tagRepository.findAll()).thenReturn(null);
         assertEquals(null, productService.getTagList());
@@ -121,7 +121,7 @@ class ProductServiceImplTest {
         productList.add(product1);
 
         Page<Product> productPage = new PageImpl<>(productList);
-        Page<ProductDTO> expectedResult = productPage.map(product -> ProductUtils.convertToDTO(product));
+        Page<ProductDTO> expectedResult = productPage.map(product -> ProductUtils.convertProductToDTO(product));
 
         when(productRepository.findAll(PageRequest.of(0, 20))).thenReturn(productPage);
         assertEquals(expectedResult, productService.getProductPage(PageRequest.of(0, 20)));
@@ -145,7 +145,7 @@ class ProductServiceImplTest {
         Set<String> tags = new HashSet<>();
         CollectionUtils.addAll(tags, tagArray);
 
-        Page<ProductDTO> expectedResult = productPage.map(product -> ProductUtils.convertToDTO(product));
+        Page<ProductDTO> expectedResult = productPage.map(product -> ProductUtils.convertProductToDTO(product));
 
         when(productRepository.findAll(any(Specification.class), any(Pageable.class))).thenReturn(productPage);
 
@@ -171,7 +171,7 @@ class ProductServiceImplTest {
     @Test
     void getProductDetails() {
         Product product = productList.get(0);
-        ProductDTO expectedResult =  ProductUtils.convertToDTO(product);
+        ProductDTO expectedResult =  ProductUtils.convertProductToDTO(product);
 
         when(productRepository.findById(any(UUID.class))).thenReturn(Optional.ofNullable(null));
         assertEquals(null, productService.getProductDetails(product.getId()));

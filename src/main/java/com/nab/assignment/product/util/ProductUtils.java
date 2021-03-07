@@ -13,7 +13,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import java.util.stream.Collectors;
 
 public class ProductUtils {
-    public static BrandDTO convertToDTO(Brand brand) {
+    public static BrandDTO convertBrandToDTO(Brand brand) {
         if (brand == null) {
             return null;
         }
@@ -25,7 +25,7 @@ public class ProductUtils {
         return dto;
     }
 
-    public static ColorDTO convertToDTO(Color color) {
+    public static ColorDTO convertColorToDTO(Color color) {
         if (color == null) {
             return null;
         }
@@ -37,7 +37,7 @@ public class ProductUtils {
         return dto;
     }
 
-    public static TagDTO convertToDTO(Tag tag) {
+    public static TagDTO convertTagToDTO(Tag tag) {
         if (tag == null) {
             return null;
         }
@@ -49,7 +49,7 @@ public class ProductUtils {
         return dto;
     }
 
-    public static ProductDTO convertToDTO(Product product) {
+    public static ProductDTO convertProductToDTO(Product product) {
         if (product == null) {
             return null;
         }
@@ -63,19 +63,19 @@ public class ProductUtils {
 
         if (CollectionUtils.isNotEmpty(product.getBrands())) {
             dto.setBrandDTOSet(
-                    product.getBrands().stream().map(brand -> convertToDTO(brand)).collect(Collectors.toSet())
+                    product.getBrands().stream().map(brand -> convertBrandToDTO(brand)).collect(Collectors.toSet())
             );
         }
 
         if (CollectionUtils.isNotEmpty(product.getColors())) {
             dto.setColorDTOSet(
-                    product.getColors().stream().map(color -> convertToDTO(color)).collect(Collectors.toSet())
+                    product.getColors().stream().map(color -> convertColorToDTO(color)).collect(Collectors.toSet())
             );
         }
 
         if (CollectionUtils.isNotEmpty(product.getTags())) {
             dto.setTagDTOSet(
-                    product.getTags().stream().map(tag -> convertToDTO(tag)).collect(Collectors.toSet())
+                    product.getTags().stream().map(tag -> convertTagToDTO(tag)).collect(Collectors.toSet())
             );
         }
 
